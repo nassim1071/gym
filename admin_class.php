@@ -15,7 +15,7 @@ Class Action {
 	    ob_end_flush();
 	}
 
-	function login(){
+	functio login(){
 		
 			extract($_POST);		
 			$qry = $this->db->query("SELECT * FROM users where username = '".$username."' and password = '".md5($password)."' ");
