@@ -54,25 +54,36 @@ if(isset($_GET['id'])){
 
 
 <div class="container-fluid">
-	<form action="" id="manage-member">
-		<div id="msg"></div>
-				<input type="hidden" name="id" value="<?php echo isset($_GET['id']) ? $_GET['id']:'' ?>" class="form-control">
-		<div class="row form-group">
-		
-			<div class="col-md-4">
-						<label class="control-label">ID No.</label>
+    <form action="" id="manage-member">
+        <div id="msg"></div>
+        <input type="hidden" name="id" value="<?php echo isset($_GET['id']) ? $_GET['id'] : '' ?>" class="form-control">
+        <div class="row form-group">
+            <div class="col-md-4">
+                <label class="control-label">ID No.</label>
+                <!-- Updated: Display UID from Arduino -->
+                <div id="uidDisplay">Please Scan your Card / Key Chain to display ID</div>
+            </div>
+        </div>
+    </form>
 
-						<!--this is the modification-->
+    <script>
+        function fetchUID() {
+            // Use AJAX to fetch UID from the PHP container file
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Update the frontend with the received UID
+                    document.getElementById('uidDisplay').innerText = xhr.responseText;
+                }
+            };
+            xhr.open('GET', 'UIDContainer.php', true);
+            xhr.send();
+        }
 
-
-						<textarea name="id" id="getUID" placeholder="Please Scan your Card / Key Chain to display ID" rows="1" cols="1" required></textarea>	
-						
-						<!--it ends here! -->
-						
-
-
-					</div>
-		</div>
+        // Fetch UID initially and set an interval to update regularly
+        fetchUID();
+        setInterval(fetchUID, 5000); // Update every 5 seconds
+    </script>
 		
 
 
